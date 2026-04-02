@@ -138,6 +138,45 @@ services:
       - NO_PROXY=${no_proxy},${HOST_IP}
     restart: on-failure:5
 
+
+  tb_postgres:
+    restart: always
+    image: "postgres:16"
+    container_name: tb_postgres
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_DB: thingsboard
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - tb_postgres_data:/var/lib/postgresql/data
+    networks:
+      - mraas
+
+  
+  thingsboard-ce:
+    restart: always
+    image: "thingsboard/tb-node:4.3.1"
+    container_name: thingsboard-ce
+    ports:
+      - "8081:8080"
+      - "7070:7070"
+      - "1883:1883"
+      - "8883:8883"
+      - "5683-5688:5683-5688/udp"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+    environment:
+      TB_SERVICE_ID: tb-ce-node
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tb_postgres:5432/thingsboard
+    depends_on:
+      - tb_postgres
+    networks:
+      - mraas
+    
   model_registry:
     image: ${DOCKER_REGISTRY}intel/model-registry:1.0.3
     container_name: model_registry
@@ -271,4 +310,6 @@ volumes:
   mr_postgres_data:
     driver: local
   prometheus_data:
+    driver: local
+  tb_postgres_data:
     driver: local
