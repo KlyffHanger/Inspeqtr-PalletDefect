@@ -1,0 +1,26 @@
+{
+  "thingsboard": {
+    "host": "thingsboard-ce",
+    "port": 1883,
+    "qos": 1,
+    "security": {
+      "type": "accessToken",
+      "accessToken": "X2f1x2BmBUEmdg3xU5wi"
+    }
+  },
+  "storage": {
+    "type": "sqlite",
+    "data_file_path": "/var/lib/thingsboard_gateway/data/"
+  },
+  "connectors": [
+    {
+      "name": "MQTT Broker Connector",
+      "type": "mqtt",
+      "configuration": "mqtt.json"
+    }
+  ],
+  "logs": {
+    "enableRemoteLogging": false,
+    "level": "DEBUG"
+  }
+}

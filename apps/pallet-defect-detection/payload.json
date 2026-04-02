@@ -1,7 +1,7 @@
 [
     {
         "pipeline": "pallet_defect_detection",
-        "payload":{
+        "payload": {
             "source": {
                 "uri": "file:///home/pipeline-server/resources/videos/warehouse.avi",
                 "type": "uri"
@@ -22,7 +22,7 @@
     },
     {
         "pipeline": "pallet_defect_detection_gpu",
-        "payload":{
+        "payload": {
             "source": {
                 "uri": "file:///home/pipeline-server/resources/videos/warehouse.avi",
                 "type": "uri"
@@ -37,6 +37,33 @@
                 "detection-properties": {
                     "model": "/home/pipeline-server/resources/models/pallet-defect-detection/deployment/Detection/model/model.xml",
                     "device": "GPU"
+                }
+            }
+        }
+    },
+    {
+        "pipeline": "pallet_defect_detection_mqtt",
+        "payload": {
+            "source": {
+                "uri": "file:///home/pipeline-server/resources/videos/warehouse.avi",
+                "type": "uri"
+            },
+            "destination": {
+                "metadata": {
+                    "type": "mqtt",
+                    "publish_frame": false,
+                    "topic": "pallet_defect_detection"
+                },
+                "frame": {
+                    "type": "webrtc",
+                    "peer-id": "mqttstream",
+                    "overlay": false
+                }
+            },
+            "parameters": {
+                "detection-properties": {
+                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/deployment/Detection/model/model.xml",
+                    "device": "CPU"
                 }
             }
         }

@@ -176,7 +176,31 @@ services:
       - tb_postgres
     networks:
       - mraas
-    
+
+  tb-gateway:
+    image: thingsboard/tb-gateway:3.8-stable
+    container_name: tb-gateway
+    restart: unless-stopped
+    depends_on:
+      - thingsboard-ce
+      - mqtt-broker
+    networks:
+      - mraas
+    entrypoint: ["/bin/sh", "/docker-entrypoint.sh"]
+    environment:
+      TB_GW_HOST: thingsboard-ce
+      TB_GW_PORT: 1883
+      TB_GW_ACCESS_TOKEN: "${TB_GATEWAY_TOKEN}"
+      TB_GW_LOG_LEVEL: DEBUG
+    volumes:
+      # Must be writable: gateway creates `connected_devices.json` and first-launch markers here.
+      - tb_gw_config:/thingsboard_gateway/config
+      # Seed the writable config volume from versioned templates.
+      - ./apps/${SAMPLE_APP}/tb-gateway/config:/config-templates:ro
+      - ./apps/${SAMPLE_APP}/tb-gateway/docker-entrypoint.sh:/docker-entrypoint.sh:ro
+      - tb_gw_data:/var/lib/thingsboard_gateway/data
+      - tb_gw_logs:/var/log/thingsboard-gateway
+
   model_registry:
     image: ${DOCKER_REGISTRY}intel/model-registry:1.0.3
     container_name: model_registry
@@ -312,4 +336,10 @@ volumes:
   prometheus_data:
     driver: local
   tb_postgres_data:
+    driver: local
+  tb_gw_data:
+    driver: local
+  tb_gw_logs:
+    driver: local
+  tb_gw_config:
     driver: local

@@ -1,0 +1,70 @@
+{
+  "broker": {
+    "host": "mqtt-broker",
+    "port": 1883,
+    "clientId": "pdd_tb_gateway",
+    "version": 5,
+    "keepAlive": 60,
+    "cleanSession": true,
+    "cleanStart": true,
+    "sessionExpiryInterval": 0,
+    "security": {
+      "type": "anonymous"
+    }
+  },
+  "mapping": [
+    {
+      "topicFilter": "pallet_defect_detection",
+      "subscriptionQos": 1,
+      "converter": {
+        "type": "json",
+        "deviceInfo": {
+          "deviceNameExpressionSource": "constant",
+          "deviceNameExpression": "pallet-defect-detection-edge",
+          "deviceProfileExpressionSource": "constant",
+          "deviceProfileExpression": "default"
+        },
+        "timeout": 60000,
+        "attributes": [],
+        "timeseries": [
+          {
+            "key": "img_handle",
+            "type": "string",
+            "value": "${metadata.img_handle}"
+          },
+          {
+            "key": "frame_id",
+            "type": "integer",
+            "value": "${metadata.frame_id}"
+          },
+          {
+            "key": "frame_time_ns",
+            "type": "string",
+            "value": "${metadata.time}"
+          },
+          {
+            "key": "frame_width",
+            "type": "integer",
+            "value": "${metadata.width}"
+          },
+          {
+            "key": "frame_height",
+            "type": "integer",
+            "value": "${metadata.height}"
+          },
+          {
+            "key": "avg_fps",
+            "type": "double",
+            "value": "${metadata.pipeline.status.avg_fps}"
+          },
+          {
+            "key": "pipeline_state",
+            "type": "string",
+            "value": "${metadata.pipeline.status.state}"
+          }
+        ]
+      }
+    }
+  ],
+  "requestsMapping": {}
+}
