@@ -53,11 +53,6 @@
                     "type": "mqtt",
                     "publish_frame": false,
                     "topic": "pallet_defect_detection"
-                },
-                "frame": {
-                    "type": "webrtc",
-                    "peer-id": "mqttstream",
-                    "overlay": false
                 }
             },
             "parameters": {

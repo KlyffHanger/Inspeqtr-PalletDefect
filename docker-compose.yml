@@ -186,7 +186,17 @@ services:
       - mqtt-broker
     networks:
       - mraas
-    entrypoint: ["/bin/sh", "/docker-entrypoint.sh"]
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+          set -eu
+          cp -f /config-templates/tb_gateway.json /thingsboard_gateway/config/tb_gateway.json
+          cp -f /config-templates/mqtt.json /thingsboard_gateway/config/mqtt.json
+          if [ -f /extensions-templates/mqtt/pdd_counts_uplink_converter.py ]; then
+            cp -f /extensions-templates/mqtt/pdd_counts_uplink_converter.py /thingsboard_gateway/extensions/mqtt/pdd_counts_uplink_converter.py
+          fi
+          exec /start-gateway.sh
     environment:
       TB_GW_HOST: thingsboard-ce
       TB_GW_PORT: 1883
@@ -197,7 +207,7 @@ services:
       - tb_gw_config:/thingsboard_gateway/config
       # Seed the writable config volume from versioned templates.
       - ./apps/${SAMPLE_APP}/tb-gateway/config:/config-templates:ro
-      - ./apps/${SAMPLE_APP}/tb-gateway/docker-entrypoint.sh:/docker-entrypoint.sh:ro
+      - ./apps/${SAMPLE_APP}/tb-gateway/extensions:/extensions-templates:ro
       - tb_gw_data:/var/lib/thingsboard_gateway/data
       - tb_gw_logs:/var/log/thingsboard-gateway
 
