@@ -1,7 +1,2 @@
-resources/
-*.bin
-*.xml
-*.avi
-*.mp4
-*.h264
 apps/*/configs/nginx/ssl/
+.env
