@@ -1,5 +1,8 @@
 {
     "config": {
+        "mqtt_publisher": {
+            "publish_frame": false
+        },
         "pipelines": [
             {
                 "name": "pallet_defect_detection_mlops",

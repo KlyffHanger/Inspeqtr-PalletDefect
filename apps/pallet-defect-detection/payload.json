@@ -14,7 +14,8 @@
             },
             "parameters": {
                 "detection-properties": {
-                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/deployment/Detection/model/model.xml",
+                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/model.xml",
+                    "model-proc": "/home/pipeline-server/resources/models/pallet-defect-detection/model_proc.json",
                     "device": "CPU"
                 }
             }
@@ -35,7 +36,8 @@
             },
             "parameters": {
                 "detection-properties": {
-                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/deployment/Detection/model/model.xml",
+                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/model.xml",
+                    "model-proc": "/home/pipeline-server/resources/models/pallet-defect-detection/model_proc.json",
                     "device": "GPU"
                 }
             }
@@ -53,16 +55,12 @@
                     "type": "mqtt",
                     "publish_frame": false,
                     "topic": "pallet_defect_detection"
-                },
-                "frame": {
-                    "type": "webrtc",
-                    "peer-id": "mqttstream",
-                    "overlay": false
                 }
             },
             "parameters": {
                 "detection-properties": {
-                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/deployment/Detection/model/model.xml",
+                    "model": "/home/pipeline-server/resources/models/pallet-defect-detection/model.xml",
+                    "model-proc": "/home/pipeline-server/resources/models/pallet-defect-detection/model_proc.json",
                     "device": "CPU"
                 }
             }

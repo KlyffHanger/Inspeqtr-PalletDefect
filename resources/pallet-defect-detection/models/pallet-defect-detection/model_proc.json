@@ -1,0 +1,26 @@
+{
+  "json_schema_version": "2.2.0",
+  "input_preproc": [
+    {
+      "layer_name": "image",
+      "format": "image",
+      "params": {
+        "resize": "aspect-ratio",
+        "color_space": "BGR",
+        "mean": [123.675, 116.28, 103.53],
+        "std": [58.395, 57.12, 57.375]
+      }
+    }
+  ],
+  "output_postproc": [
+    {
+      "converter": "boxes_labels",
+      "confidence_threshold": 0.7,
+      "labels": [
+        "defect",
+        "shipping_label",
+        "box"
+      ]
+    }
+  ]
+}

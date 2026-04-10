@@ -3,6 +3,7 @@ set -eu
 
 TEMPLATES_DIR="${TEMPLATES_DIR:-/config-templates}"
 CONFIG_DIR="${CONFIG_DIR:-/thingsboard_gateway/config}"
+EXT_TEMPLATES_DIR="${EXT_TEMPLATES_DIR:-/extensions-templates}"
 
 mkdir -p "$CONFIG_DIR"
 
@@ -15,5 +16,10 @@ if [ -f "$TEMPLATES_DIR/mqtt.json" ]; then
   cp -f "$TEMPLATES_DIR/mqtt.json" "$CONFIG_DIR/mqtt.json"
 fi
 
-exec /start-gateway.sh
+# Seed custom converter(s) into the gateway extensions folder.
+# (Do not mount extensions read-only: gateway may compile python bytecode there.)
+if [ -f "$EXT_TEMPLATES_DIR/mqtt/pdd_counts_uplink_converter.py" ]; then
+  cp -f "$EXT_TEMPLATES_DIR/mqtt/pdd_counts_uplink_converter.py" "/thingsboard_gateway/extensions/mqtt/pdd_counts_uplink_converter.py"
+fi
 
+exec /start-gateway.sh
