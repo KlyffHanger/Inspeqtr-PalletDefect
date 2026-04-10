@@ -198,8 +198,8 @@ services:
           fi
           exec /start-gateway.sh
     environment:
-      TB_GW_HOST: thingsboard-ce
-      TB_GW_PORT: 1883
+      TB_GW_HOST: ${TB_GW_HOST:-thingsboard-ce}
+      TB_GW_PORT: ${TB_GW_PORT:-1883}
       TB_GW_ACCESS_TOKEN: "${TB_GATEWAY_TOKEN}"
       TB_GW_LOG_LEVEL: DEBUG
     volumes:

@@ -1,11 +1,11 @@
 {
   "thingsboard": {
-    "host": "thingsboard-ce",
+    "host": "35.211.55.46",
     "port": 1883,
     "qos": 1,
     "security": {
       "type": "accessToken",
-      "accessToken": "X2f1x2BmBUEmdg3xU5wi"
+      "accessToken": "3iih3zlj33o9tmlik4m0"
     }
   },
   "storage": {

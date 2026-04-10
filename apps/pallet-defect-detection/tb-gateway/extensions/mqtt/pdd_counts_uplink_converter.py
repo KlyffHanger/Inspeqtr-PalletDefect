@@ -366,6 +366,7 @@ class PddCountsUplinkConverter(MqttUplinkConverter):
                     "box_count": self.__totals["box"],
                     "defect_count": self.__totals["defect"],
                     "detection_count": self.__totals["detection"],
+                    "defect_percentage": ((self.__totals["defect"] / self.__totals["box"]) * 100.0) if self.__totals["box"] > 0 else 0.0,
                     # Per-frame for debugging.
                     "box_cross_frame": box_cross_frame,
                     "defect_box_cross_frame": defect_box_cross_frame,
